@@ -43,8 +43,8 @@ class People(Base):
     gender = Column(String(250), nullable=False)
     homeworld = Column(String(250), nullable=False)
     url = Column(String(250), nullable=False)
-    ids = relationship("Planets", ForeignKey("planets.id"))
-    planet=relationship("Planets")
+    planets_id = Column(Integer, ForeignKey("planets.id"))
+    planet = relationship("Planets")
 
 class Cast(Base):
     __tablename__ ="cast"
@@ -73,7 +73,7 @@ class Films(Base):
     release_date= Column(String(250), nullable=False)
     opening_crawl= Column(String(5000), nullable=False)
     url= Column(String(250), nullable=False)
-    ids = relationship("Planets", backref="Planets.id")
+    ids = relationship("Planets", backref="films")
 
 class Planets(Base):
     __tablename__ = "planets"
@@ -90,8 +90,26 @@ class Planets(Base):
     created= Column(String(250), nullable=False)
     edited= Column(String(250), nullable=False)
     url= Column(String(250), nullable=False)
-    films_id = Column(Integer, ForeignKey("Films.id", nullable=False))
+    films_id = Column(Integer, ForeignKey("films.id"), nullable=False)
 
+class User(Base):
+    __tablename__ = "user"
+    
+    id = Column(Integer, primary_key=True, nullable=False)
+    username = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    password = Column(String(250), nullable=False)
+    name = Column(String(250), nullable=False)
+    last_name = Column(String(250), nullable=False)
+#    user = User()
+
+class Favorites(Base):
+    __tablename__ = "favorites"
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    user_id = Column(Integer, nullable=False)
+    item_name = Column(String(250), nullable=False)
+    item_id = Column(String(250), nullable=False)
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
