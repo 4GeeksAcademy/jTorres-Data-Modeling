@@ -111,5 +111,8 @@ class Favorites(Base):
     item_name = Column(String(250), nullable=False)
     item_id = Column(String(250), nullable=False)
 
+    user_id= Column(String(250), nullable=False)
+    user=relationship("user.id")
+
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
